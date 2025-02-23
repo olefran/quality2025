@@ -1,0 +1,12 @@
+create, hotel, Las Meninas
+create, customer, Oscar
+create, reservation, Las Meninas, Oscar, 202
+print, hotel, Las Meninas
+print, customer, Oscar
+edit, hotel, Las Meninas, Neo Meninas
+edit, customer, Oscar, Lerma
+print, hotel, Neo Meninas
+remove, reservation, Neo Meninas, Lerma, 202
+print, hotel, Neo Meninas
+remove, customer, Lerma
+remove, hotel, Las Meninas

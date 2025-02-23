@@ -12,47 +12,74 @@ on relative execution path.
 """
 import sys
 import time
-import json
+
 
 class Hotel:
+    def print_info(self):
+        print(f"----- Hotel: {self.name} ----")
+        if not self.reservations:
+            print("No reservations registered")
+        else:
+            for reservation in self.reservations:
+                reservation.print_info()
+        print(f"---- End of Hotel: {self.name} ----")
+
+    def add_reservation(self, customer, num):
+        reservation = Reservation(customer, num)
+        self.reservations.append(reservation)
+
+    def modify(self, name):
+        self.name = name
+
     def __init__(self,name):
         self.name = name
-        self.rooms = []
+        self.reservations = []
 
 class Reservation:
+    def __init__(self, customer, num):
+        self.customer = customer
+        self.num = num
+
+    def print_info(self):
+        print(f"Reservation: {self.customer.name} on {self.num}")
+
+
+class Customer:
     def __init__(self, name):
         self.name = name
 
-class Customers:
-    def __init__(self, name):
-        self.name = name
+    def print_info(self):
+        print("---- Customer ----")
+        print(f"Name: {self.name}")
+        print("----------------")
 
+    def modify(self, name):
+        self.name = name
 
 
 
 def main():
     """Compute Word count from a file."""
-    price_table = {}
-    total = 0
-    price = {}
-    sales = {}
+    hotels = []
+    customers = []
     # Check if both correct file paths are provided
     if len(sys.argv) != 3:
-        print("Usage: python computeSales <Price_file_path> <Sales_file_path>")
+        print("Usage: python reservation_sys.py <Commands_file_path>")
         sys.exit(1)
 
     try:
-        with open(sys.argv[1], 'r', encoding='UTF-8') as price_file:
-            price = json.load(price_file)
+        with open(sys.argv[1], 'r', encoding='UTF-8') as file:
+            for line in file:
+                if not line or line.startswith('#'):
+                    continue
+
+                try:
+                    cmd = line.split(',')
+                except TypeError:
+                    print
+
     except FileNotFoundError:
         print(f"Error: The file '{sys.argv[1]}' was not found.")
-        sys.exit(1)
-
-    try:
-        with open(sys.argv[2], 'r', encoding='UTF-8') as sales_file:
-            sales = json.load(sales_file)
-    except FileNotFoundError:
-        print(f"Error: The file '{sys.argv[2]}' was not found.")
         sys.exit(1)
 
     start_time = time.time()
